@@ -116,7 +116,7 @@ while($row3 = mysqli_fetch_assoc($query_result2)){
             <tfoot>
             <tr>
 
-              <td colspan="8" align="right"></td>
+              <td colspan="8" align="right">Total</td>
               <td  align="right"><?php echo $output2;?></td>
               <td  align="right"><?php echo $output;?></td>
             
