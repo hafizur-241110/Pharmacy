@@ -10,10 +10,12 @@ $category       = $_POST['category'];
 $company_name	  = $_POST['company_name'];
 $quantity 	  	= $_POST['quantity'];
 $cost_price 		= $_POST['cost_price'];
-$total_price    = $_POST['total_price'];
+ $total_price    = $quantity*$cost_price;
   
 
-$sql = "INSERT INTO medicine_tbl VALUES(NULL,'$medi_name', '$genatic_name', '$strength', '$medi_type', '$category', '$company_name', '$quantity','$cost_price','$total_price')";
+$sql = "INSERT INTO medicine_tbl VALUES(NULL,'$medi_name', '$genatic_name', 
+'$strength', '$medi_type', '$category', '$company_name', '$quantity',
+'$cost_price','$total_price')";
   	
  if(mysqli_query($conn, $sql)){
  		

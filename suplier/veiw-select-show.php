@@ -60,7 +60,22 @@
 
            <tr>
              <th width="150" class="text-right">Company Name : </th>
-             <td><?php echo $std['company_name'];?></td>
+             <td><?php
+               //ডাটা বেস কানেকশন
+ $conn = mysqli_connect('localhost','root','','pharmacy');
+$company_id=$std['company_name'];
+              //ডাটা সিলেকট
+  $sql = "SELECT * FROM company_tbl WHERE id=$company_id";
+ 
+ //নিচের ভেরিয়বলে ডাটার কোয়েরি রেজাল্ট আনা
+ 
+ $company_name2 = mysqli_query($conn, $sql);
+
+               while($company_name = mysqli_fetch_assoc($company_name2)){
+                echo $company_name['company_name'];
+               }
+
+               ?></td>
            </tr>
 
            <tr>

@@ -1,29 +1,17 @@
 <?php
  //ডাটা বেস কানেকশন
- $conn = mysqli_connect('localhost','root','','pharmacy');
+ $conn = new mysqli_connect('localhost','root','','pharmacy');
+  if($conn->connect_error) {die("Connection Failed : ".$conn->connect-error);}
+    $output = '';
 
-//ডাটা সিলেকট
- $sql = "SELECT * FROM medicine_tbl";
- $result = mysqli_query($conn, $sql);
- //নিচের ভেরিয়বলে ডাটার কোয়েরি রেজাল্ট আনা
+ $hafi = "SELECT * FROM medicine_tbl";
+ $stmt = $conn->query($hafi);
  
-  $query = "SELECT SUM(total_price) AS sum FROM medicine_tbl";
-  $query_result = mysqli_query($conn, $query);
-
-while($row2 = mysqli_fetch_assoc($query_result)){
- $output= $row2['sum'];
-}
- 
-  $query2 = "SELECT SUM(cost_price) AS cost FROM medicine_tbl";
- 
-  $query_result2 = mysqli_query($conn,$query2 );
-
-while($row3 = mysqli_fetch_assoc($query_result2)){
-  $output2= $row3['cost'];
- }
+ $hafi2 = "SELECT sum(quantity) AS total_price, sum(cost_price) AS all_quantity FROM medicine_tbl";
+ $stmt2 = $conn->query($hafi2);
+ $row5 = $stmt2->fetch_assoc();
  
  ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,13 +26,6 @@ while($row3 = mysqli_fetch_assoc($query_result2)){
    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
-<style type="text/css">
-  .hafizur tbody tr:nth-child(odd){
-   background-color:#00f5f5;
-}
-
-</style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -84,20 +65,21 @@ while($row3 = mysqli_fetch_assoc($query_result2)){
             <tbody>
             
             <?php 
-            $l=1; 
-            while($row = mysqli_fetch_assoc($result)){ ?>
-
-            
-            <tr> <!-- TR এর ভিতরে থাকা TD গুলোকে  WHILE LOOP দিয়ে পুনরাবৃত্তি করা -->
-              <td><?php echo $l++;?></td>
+            $i=1;
+            if($stmt->num_rows> 0)
+            {
+                while($row=$stmt->fetch_array())
+                {?>
+                    $output = <tr>
+                    
+                <td><?php echo $l++;?></td>
    
               <td><?php echo $row['medi_name']?></td>
               <td><?php echo $row['genatic_name']?></td>
               <td><?php echo $row['strength']?></td>
               <td><?php echo $row['medi_type']?></td>
               <td><?php echo $row['category']?></td>
-              <td>
-              <?php
+              <td><?php
                //ডাটা বেস কানেকশন
  $conn = mysqli_connect('localhost','root','','pharmacy');
 $company_id=$row['company_name'];
@@ -112,14 +94,23 @@ $company_id=$row['company_name'];
                 echo $company_name['company_name'];
                }
 
-               ?>
-              </td>
+               ?></td>
               <td><?php echo $row['quantity']?></td>
               <td><?php echo $row['cost_price']?></td>
               <td><?php echo $row['total_price']?></td>
-              
-              
-              
+                    
+                    </tr>;
+                }
+            }
+            else
+            {
+                $output = <tr><td colspan="9" class = "text-center"><h4> DATa Not Fount.</h4></td>    
+           
+            <td ></td>
+                </tr>;
+                echo $output;
+            }
+                         
              <!--  <td> <img src="<?php echo 'image/download.jpg' . $row['picture'] ?>" width="90" height="90" alt=""> </td> -->
              
               <td  class="list-group-item list-group-item-info">
@@ -158,19 +149,7 @@ $company_id=$row['company_name'];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script src="js/bootstrap.min.js"></script>
-    <!-- <script>
-    $('.form-group').on('input','.prc',function(){
-      var totalSum = 0;
-      $('.form-group .prc').each(function(){
-        var inputVal = $(this).val();
-        if($.isNumeric(inputVal)){
-          totalSum+= parseFloat(inputVal);
-        }
-      });
-      $('#result').val(totalSum);
-    });
-    </script> -->
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript"> $('#example').DataTable(); </script>
 
   </body>

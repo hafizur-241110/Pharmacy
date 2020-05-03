@@ -8,16 +8,13 @@
  //নিচের ভেরিয়বলে ডাটার কোয়েরি রেজাল্ট আনা
  $result = mysqli_query($conn, $sql);
 
- $company = "SELECT * FROM company_tbl";
+ /*$company = "SELECT * FROM company_tbl";
  $company_result = mysqli_query($conn, $company);
  
-$query = "SELECT sum(total_price) AS sum FROM medicine_table";
-$query_result = mysqli_query($conn, $query);
-while($row2 = mysqli_fetch_assoc($query_result)){
-  $output = "Total is"." ".$row2['sum'];
-}
-
- 
+  $query = "SELECT SUM(quantity)*SUM(cost_price) AS sum quantity,cost_price FROM medicine_tbl";
+  $query_result2 = mysqli_query($conn, $query);*/
+  
+   
 
  ?>
 
@@ -49,9 +46,7 @@ while($row2 = mysqli_fetch_assoc($query_result)){
         </div>
         <div class="col-md-9">
           <h2 class="text-center">Medicine Information</h2>
-          <?php
-          echo $output;
-          ?>
+        
           <br>
          <form action="store_medi.php" method="POST"  enctype="multipart/form-data"  >
           
@@ -88,7 +83,8 @@ while($row2 = mysqli_fetch_assoc($query_result)){
                 <?php
                 while($row = mysqli_fetch_assoc($company_result)){ ?>
 
-               <option><?php echo $row['company_name']?></option>
+                <option value="<?php echo $row['id'];?>"><?php echo $row['company_name']?>
+              -- <?php echo $row['address']?> -- <?php echo $row['district']?></option>
            
             <?php } ?>
               </select> 
@@ -97,26 +93,19 @@ while($row2 = mysqli_fetch_assoc($query_result)){
           
           <div class="form-group">
             <label for="Quantity" class="label-success" >Quantity : </label>
-            <input type="text" class="form-control" name ="quantity" placeholder="Quantity">
+            <input type="number" class="form-control input-sm text-left amount" name ="quantity" placeholder="Quantity">
           </div>
           
           <div class="form-group">
             <label for="Cost Price">Cost Price : </label>
-            <input type="text" class="form-control" name ="cost_price" placeholder="Cost Price">
+            <input type="number" class="form-control input-sm text-left amount" name ="cost_price" placeholder="Cost Price">
           </div>  
           
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="Total Price">Total Price : </label>
-            <input type="text" class="form-control" name ="total_price" >
-              <?php 
-
-               SELECT sum(quantity+cost_price) FROM medicine_tbl;
-              sum(total_price)
-
-
-               ?>
-
-          </div> 
+            <input type="number" class="form-control input-sm text-left amount" name ="total_price" value=>
+             
+          </div>  -->
           
    
           <button type="submit" class="btn btn-default">Submit</button>
@@ -132,6 +121,19 @@ while($row2 = mysqli_fetch_assoc($query_result)){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+
+    <script>
+    $('.form-group').on('number','.prc',function(){
+      var totalSum = 0;
+      $('.form-group .prc').each(function(){
+        var numberVal = $(this).val();
+        if($.isNumeric(numberVal)){
+          totalSum+= parseFloat(numberVal);
+        }
+      });
+      $('#result').val(totalSum);
+    });
+    </script>
 
   </body>
 </html>

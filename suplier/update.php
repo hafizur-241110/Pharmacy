@@ -4,10 +4,10 @@
  
  
  $supplier_id 	= $_POST['supplier_id'];
- $name 			= $_POST['name'];
+ $name 		= $_POST['name'];
  $email 		= $_POST['email'];
- $company_name 	= $_POST['company_name'];
- $address 		= $_POST['address'];
+ $company_name = $_POST['company_name'];
+ $address 	= $_POST['address'];
  $mobile 		= $_POST['mobile'];
  
  $c_image= $_FILES['picture']['name'];

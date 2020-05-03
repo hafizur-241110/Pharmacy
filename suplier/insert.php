@@ -64,7 +64,7 @@
                 <?php
                 while($row = mysqli_fetch_assoc($company_result)){ ?>
 
-               <option value="<?php echo $row['id'];?>"><?php echo $row['company_name']?>-- <?php echo $row['address']?></option>
+               <option value="<?php echo $row['id'];?>"><?php echo $row['company_name']?>-- <?php echo $row['address']?> -- <?php echo $row['district']?></option>
            
             <?php } ?>
         

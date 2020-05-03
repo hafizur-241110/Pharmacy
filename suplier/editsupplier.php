@@ -62,11 +62,13 @@
 
          <div class="form-group">
             <label for="Company Name" class="label-primary">Company Name : </label>
-              <select required="" type="option" class="form-control" name ="company_name" placeholder="Company Name"> 
+              <select required="" type="option" class="form-control" name ="company_name"> 
                 <?php
                 while($row = mysqli_fetch_assoc($company_result)){ ?>
 
-               <option ><?php echo $row['company_name']?></option>
+               
+               <option value="<?php echo $row['id'];?>"><?php echo $row['company_name']?>
+               -- <?php echo $row['address']?> -- <?php echo $row['district']?></option>
            
             <?php } ?>
               </select> 

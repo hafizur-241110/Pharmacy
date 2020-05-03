@@ -4,7 +4,7 @@
 
  $conn = mysqli_connect('localhost','root','','pharmacy');
  
- $sql = "SELECT * FROM supplier_tbl WHERE id = $id";
+ $sql = "SELECT * FROM medicine_tbl WHERE id = $id";
 
  $result = mysqli_query($conn, $sql);
  
@@ -37,45 +37,68 @@
     <div class="container">
       <div class="row">
         <div class="col-md-2">
-          <a class="btn btn-info" href="index.php">Go Supplier List</a>
+          <a class="btn btn-info" href="index_medi.php">Go Medicine List</a>
         </div>
         <div class="col-md-10">
-          <h2 class="text-white bg-dark" > Supplier Information </h2>
+          <h2 class="text-white bg-dark" > Medicine Information </h2>
           <br>
          <table class="table">
            <tr>
-             <th width="150" class="text-right">Supplier ID : </th>
-             <td><?php echo $std['supplier_id'];?></td>
+             <th width="150" class="text-right">Medicine Name : </th>
+             <td><?php echo $std['medi_name'];?></td>
            </tr>
 
            <tr>
-             <th width="150" class="text-right">Name: </th>
-             <td><?php echo $std['name'];?></td>
+             <th width="150" class="text-right">Genatic Name: </th>
+             <td><?php echo $std['genatic_name'];?></td>
            </tr>
 
            <tr>
-             <th width="150" class="text-right">E-mail : </th>
-             <td><?php echo $std['email'];?></td>
+             <th width="150" class="text-right">Strength : </th>
+             <td><?php echo $std['strength'];?></td>
            </tr>
 
+           <tr>
+             <th width="150" class="text-right">Medicine Type : </th>
+             <td><?php echo $std['medi_type'];?></td>
+           </tr>
+
+           <tr>
+             <th width="150" class="text-right">Category : </th>
+             <td><?php echo $std['category']; ?></td>
+           </tr>
            <tr>
              <th width="150" class="text-right">Company Name : </th>
-             <td><?php echo $std['company_name'];?></td>
-           </tr>
+             <td><?php
+               //ডাটা বেস কানেকশন
+ $conn = mysqli_connect('localhost','root','','pharmacy');
+$company_id=$std['company_name'];
+              //ডাটা সিলেকট
+  $sql = "SELECT * FROM company_tbl WHERE id=$company_id";
+ 
+ //নিচের ভেরিয়বলে ডাটার কোয়েরি রেজাল্ট আনা
+ 
+ $company_name2 = mysqli_query($conn, $sql);
 
-           <tr>
-             <th width="150" class="text-right">Addrress : </th>
-             <td><?php echo $std['address']; ?></td>
-           </tr>
-           <tr>
-             <th width="150" class="text-right">Mobile : </th>
-             <td><?php echo $std['mobile']; ?></td>
-           </tr>
+               while($company_name = mysqli_fetch_assoc($company_name2)){
+                echo $company_name['company_name'];
+               }
 
-           <tr>
-             <th width="150" class="">Picture : </th>
-             <td><img src="<?php echo $std['picture']?>" height="100px", width="100px" ></td>
+               ?></td>
            </tr>
+           <tr>
+             <th width="150" class="text-right">Quantity : </th>
+             <td><?php echo $std['quantity']; ?></td>
+           </tr>
+           <tr>
+             <th width="150" class="text-right">Cost Price : </th>
+             <td><?php echo $std['cost_price']; ?></td>
+           </tr>
+           <tr>
+             <th width="150" class="text-right">Total Price : </th>
+             <td><?php echo $std['total_price']; ?></td>
+           </tr>
+          
           
                       
          </table>

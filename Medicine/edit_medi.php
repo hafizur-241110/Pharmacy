@@ -4,7 +4,7 @@
 
  $conn = mysqli_connect('localhost','root','','pharmacy');
  
- $sql = "SELECT * FROM supplier_tbl WHERE id = $id";
+ $sql = "SELECT * FROM medicine_tbl WHERE id = $id";
  
  $result = mysqli_query($conn, $sql);
  
@@ -38,57 +38,78 @@
     <div class="container">
       <div class="row">
         <div class="col-md-3">
-          <a class="btn btn-info" href="index.php"> Udate Supplier</a>
+          <a class="btn btn-info" href="index_medi.php"> Udate Supplier</a>
         </div>
         <div class="col-md-9">
-          <h2> Edit Supplier ID</h2>
+          <h2> Edit Medicine </h2>
           
-         <form action="update.php?id=<?php echo $id?>" method="POST" enctype="multipart/form-data">
+         <form action="update_medi.php?id=<?php echo $id?>" method="POST" enctype="multipart/form-data">
           
-          <div class="form-group">
-            <label for="Supplier ID">Supplier ID : </label>
-            <input type="text" class="form-control" name ="supplier_id" value="<?php echo $std['supplier_id']?>">
+         <div class="form-group">
+            <label for="Medicine Name" class="label-primary"> Medicine Name : </label>
+            <input type="text" class="form-control" name ="medi_name" value="<?php echo $std['medi_name']?>" >
           </div>
 
           <div class="form-group">
-            <label for="Name"> Name : </label>
-            <input type="text" class="form-control" name ="name" value="<?php echo $std['name']?>">
+            <label for="Genatic Name" class="label-primary"> Genatic Name : </label>
+            <input type="text" class="form-control" name ="genatic_name" value="<?php echo $std['genatic_name']?>">
           </div>
 
           <div class="form-group">
-            <label for="E-mail">E-mail: </label>
-            <input type="text" class="form-control" name ="email" value="<?php echo $std['email']?>">
+            <label for="Strength" class="label-primary">Strength: </label>
+            <input type="text" class="form-control" name ="strength" value="<?php echo $std['strength']?>">
+          </div>
+
+          <div class="form-group">
+            <label for="Medicine Type" class="label-primary">Medicine Type : </label>
+              <select required="" type="option" class="form-control" name ="medi_type"> 
+                <option value="Tablet">Tablet</option>
+                <option value="Capsole">Capsole</option>
+                <option value="Syrup">Syrup</option>
+                <option value="Suspension">Suspension</option>
+           
+               </select> 
+ 
+          </div>
+
+          <div class="form-group">
+            <label for="Category" class="label-primary">Category: </label>
+            <input type="text" class="form-control" name ="category" value="<?php echo $std['category']?>">
           </div>
 
          <div class="form-group">
             <label for="Company Name" class="label-primary">Company Name : </label>
-              <select required="" type="option" class="form-control" name ="company_name" placeholder="Company Name"> 
+              
+              <select required="" type="option" class="form-control" name ="company_name"> 
                 <?php
                 while($row = mysqli_fetch_assoc($company_result)){ ?>
 
-               <option ><?php echo $row['company_name']?></option>
+               
+               <option value="<?php echo $row['id'];?>"><?php echo $row['company_name']?>
+               -- <?php echo $row['address']?> -- <?php echo $row['district']?></option>
            
             <?php } ?>
               </select> 
  
           </div>
              
-          <div class="form-group">
-            <label for="Address">Address : </label>
-            <input type="text" class="form-control" name ="address"  value="<?php echo $std['address'] ?>">
+        <div class="form-group">
+            <label for="Quantity" class="label-success" >Quantity : </label>
+            <input type="number" class="form-control" name ="quantity" value="<?php echo $std['quantity']?>">
           </div>
           
           <div class="form-group">
-            <label for="Mobile">Mobile : </label>
-            <input type="text" class="form-control" name ="mobile"  value="<?php echo $std['mobile'] ?>">
-          </div>            
-          
+            <label for="Cost Price">Cost Price : </label>
+            <input type="number" class="form-control" name ="cost_price" value="<?php echo $std['cost_price']?>">
+          </div>  
+<!--           
           <div class="form-group">
-            <label for="picture">Picture : </label>
-            <input type="file" class="form-control" name ="picture"  value="<?php echo $std['picture'] ?>">
-          </div>
+            <label for="Total Price">Total Price : </label>
+            <input type="number" class="form-control" name ="total_price" value="<?php echo $std['total_price']?>">
+             
+          </div>  -->
 
-          <button type="submit" class="btn btn-danger lg">Update Supplier</button>
+          <button type="submit" class="btn btn-danger lg">Update Medicine</button>
         
         </form>
         </div>
